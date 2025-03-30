@@ -150,8 +150,7 @@
     projectId: "thespotlightblog-a3f92",
     storageBucket: "thespotlightblog-a3f92.firebasestorage.app",
     messagingSenderId: "301790739734",
-    appId: "1:301790739734:web:790d0856a006b684e62437",
-    measurementId: "G-E7WSWKC5M4"
+    appId: "1:301790739734:web:790d0856a006b684e62437"
   };
 
   // Initialize Firebase
@@ -224,7 +223,7 @@
       if (email) {
         sendPasswordResetEmail(auth, email)
           .then(() => {
-            document.getElementById('status').innerText = '9jahotblog Password reset email sent!';
+            document.getElementById('status').innerText = 'Thespotlightnews Password reset email sent!';
           })
           .catch((error) => {
             document.getElementById('status').innerText = `Error: ${error.message}`;
