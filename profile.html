@@ -1,0 +1,205 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Welcome to Thespotlightnews, Enjoy Articles, news and more..</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+   <style>
+        body {
+            transition: background-color 0.5s, color 0.5s;
+        }
+
+        .profile-container,
+        .writing-container {
+            text-align: center;
+            background-color: #111111;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+            margin-top: 20px;
+            position: relative;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .profile-container img {
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+        }
+
+        .profile-container button,
+        .writing-container button,
+        .theme-toggle {
+            margin-top: 10px;
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .writing-container textarea {
+            width: 100%;
+            height: 200px;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .library-container img {
+            width: 100px;
+            height: 150px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        #dark-mode-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #444;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        footer {
+            margin-top: 40px;
+        }
+    </style>
+</head>
+	</head>
+	<body class="is-preload">
+
+		<!-- Page Wrapper -->
+			<div id="page-wrapper">
+
+				<!-- Header -->
+					<header id="header">
+						<h1><a href="index.html">The Spotlight News</a></h1>
+						<nav>
+							<a href="#menu">Menu</a>
+						</nav>
+					</header>
+
+				<!-- Menu -->
+					<nav id="menu">
+						<div class="inner">
+							<h2>Menu</h2>
+							<ul class="links">
+								<li><a href="index.html">Home</a></li>
+								<li><a href="generic.html">Articles</a></li>
+								<li><a href="elements.html">Elements</a></li>
+								<li><a href="login-page.html">Log In</a></li>
+								<li><a href="login-page.html">Sign Up</a></li>
+							</ul>
+							<a href="#" class="close">Close</a>
+						</div>
+					</nav>
+
+
+        <!-- Main -->
+        <div id="main" class="wrapper style1">
+            <div class="container">
+                <header class="major">
+                    <h1>Welcome to SpotlightNews, <span id="user-name"></span>!</h1>
+                </header>
+
+            <!-- Profile Section -->
+<section id="profile-section">
+    <div class="profile-container">
+        <button class="theme-toggle">🌙</button>
+        <div style="text-align: center;">
+            <img id="profile-photo" src="https://via.placeholder.com/100" alt="Profile Picture" style="width: 100px; height: 100px; border-radius: 50%;" />
+        </div>
+        <p>Email: <span id="user-email"></span></p>
+        <p>Username: <span id="user-username"></span></p>
+        <p>Articles: N/A</p>
+        <p>Level: <span id="user-level">Beginner</span></p>
+        <button id="edit-profile" class="btn btn-primary mt-3">Edit Profile</button>
+        <button id="logout" class="btn btn-danger mt-2">Logout</button>
+        <hr />
+        <p style="font-size: 0.9em; color: #555;">Don't have a link for an image to display on your profile? Go to <a href="https://postimg.cc" target="_blank">postimg.cc</a>, upload an image, get the link, and paste it here. Your image will automatically display after refreshing.</p>
+    </div>
+</section>
+
+        
+
+
+<!-- Footer -->
+					<section id="footer">
+						<div class="inner">
+							<h2 class="major">Get in touch</h2>
+							<p>We'll love to hear from you.</p>
+							<form method="post" action="https://formspree.io/f/myzgeagq" class="cta">
+								<div class="fields">
+									<div class="field">
+										<label for="name">Name</label>
+										<input type="text" name="name" id="name" />
+									</div>
+									<div class="field">
+										<label for="email">Email</label>
+										<input type="email" name="email" id="email" />
+									</div>
+									<div class="field">
+										<label for="message">Message</label>
+										<textarea name="message" id="message" rows="4"></textarea>
+									</div>
+								</div>
+								<ul class="actions">
+									<li><input type="submit" value="Send Message" /></li>
+								</ul>
+							</form>
+							<ul class="contact">
+								<li class="icon solid fa-home">
+									Lagos, Nigeria<br />
+									100428<br />
+									Yaba.
+								</li>
+								<li class="icon solid fa-phone">(000) 000-0000</li>
+								<li class="icon solid fa-envelope"><a href="mailto:philipsmith@consultant.com">Philipsmith@consultant.con</a></li>
+								<li class="icon brands fa-twitter"><a href="https://x.com/AbrahamAmusan?t=iDhbJACnH7xlfmN_QHLPqg&s=09">X.com/AbrahamAmusan</a></li>
+								<li class="icon brands fa-facebook-f"><a href="#">facebook.com/comingsoon</a></li>
+								<li class="icon brands fa-instagram"><a href="#">instagram.com/comingsoon</a></li>
+							</ul>
+							<ul class="copyright">
+								<li>&copy; Thespotlightblog. All rights reserved.</li><li>Design: <a href="https://wa.me/+2348159983206">Philip Smith</a></li>
+							</ul>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
+    
