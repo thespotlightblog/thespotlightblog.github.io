@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Become a Member, Create a spotlight Account - Authentication - Write, Publish!</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f9f9f9;
+      margin: 0;
+    }
+    .auth-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 350px;
+      text-align: center;
+    }
+    .auth-container img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+    }
+    .auth-container h2 {
+      margin: 0 0 20px;
+      font-size: 24px;
+      color: #333;
+    }
+    .auth-container form {
+      display: flex;
+      flex-direction: column;
+    }
+    .auth-container input, .auth-container select {
+      margin-bottom: 10px;
+      padding: 12px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    .auth-container button {
+      padding: 12px;
+      background-color: #0288d1;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .auth-container button:hover {
+      background-color: #0277bd;
+    }
+    .auth-container .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: calc(50% - 10px);
+      cursor: pointer;
+    }
+    .auth-container .password-container {
+      position: relative;
+    }
+    .auth-container .login-toggle {
+      cursor: pointer;
+      color: #0288d1;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    .auth-container .login-toggle:hover {
+      text-decoration: underline;
+    }
+    .auth-container .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-container">
+    <img src="https://i.postimg.cc/k4wHDGf0/IMG-20250330-112354-492.jpg" alt="writer logo" />
+    <h2>Create an Account</h2>
+    <p style="display: inline-block; animation: dance 3s infinite; font-size: 1em; color: #333;">Become a member 🚀✍️</p><style>@keyframes dance {0% { transform: translateY(0); } 50% { transform: translateY(-20px) rotate(-10deg); } 100% { transform: translateY(0) rotate(10deg); }}</style>
+    <form id="signup-form">
+      <input type="text" id="signup-username" placeholder="Username" required />
+      <input type="text" id="signup-fullname" placeholder="Full Name" required />
+      <input type="email" id="signup-email" placeholder="Email" required />
+      <div class="password-container">
+        <input type="password" id="signup-password" placeholder="Password" required />
+        <span class="toggle-password">👁️</span>
+      </div>
+      <div class="password-container">
+        <input type="password" id="signup-password-confirm" placeholder="Confirm Password" required />
+        <span class="toggle-password">👁️</span>
+      </div>
+      <input type="date" id="signup-birthday" placeholder="Birthday" required />
+      <select id="signup-country" required>
+        <option value="">Select Country</option>
+        <!-- Add options for countries here -->
+<option value="Nigeria">Nigeria</option>
+<option value="United States">United States</option>
+<option value="Canada">Canada</option>
+<option value="United Kingdom">United Kingdom</option>
+<option value="South Africa">South Africa</option>
+<option value="Kenya">Kenya</option>
+<option value="Egypt">Egypt</option>
+<option value="Germany">Germany</option>
+<option value="France">France</option>
+<option value="Japan">Japan</option>
+<option value="China">China</option>
+<option value="Brazil">Brazil</option>
+<option value="India">India</option>
+<option value="Australia">Australia</option>
+        <!-- Add other countries as needed -->
+      </select>
+      <label>
+        <input type="checkbox" id="two-step-verification" /> Enable Two-Step Verification
+      </label>
+      <button type="submit">Sign Up</button>
+    </form>
+    <div class="login-toggle">Already have an account? Log in.</div>
+    <form id="login-form" class="hidden">
+      <h2>Login</h2>
+      <input type="email" id="login-email" placeholder="Email" required />
+      <div class="password-container">
+        <input type="password" id="login-password" placeholder="Password" required />
+        <span class="toggle-password">👁️</span>
+      </div>
+      <button type="submit">Login</button>
+      <div id="forgot-password">Forgot Password?</div>
+    </form>
+    <div id="status"></div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCzajY4QIxiRiob2ho-Cgkj6EtOz83AzI8",
+      authDomain: "jahotblog-login.firebaseapp.com",
+      projectId: "jahotblog-login",
+      storageBucket: "jahotblog-login.appspot.com",
+      messagingSenderId: "661526730601",
+      appId: "1:661526730601:web:27a3c1624ccd6f20ab8ff8"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Toggle Password Visibility
+    document.querySelectorAll('.toggle-password').forEach(item => {
+      item.addEventListener('click', function () {
+        const input = this.previousElementSibling;
+        input.type = input.type === 'password' ? 'text' : 'password';
+      });
+    });
+
+    // Show Login Form
+    document.querySelector('.login-toggle').addEventListener('click', function () {
+      document.getElementById('signup-form').classList.add('hidden');
+      document.getElementById('login-form').classList.remove('hidden');
+    });
+
+    // Sign Up Form Submission
+    document.getElementById('signup-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
+      const username = document.getElementById('signup-username').value;
+      const fullname = document.getElementById('signup-fullname').value;
+      const twoStepVerification = document.getElementById('two-step-verification').checked;
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          sendEmailVerification(userCredential.user);
+          updateProfile(userCredential.user, {
+            displayName: username
+          });
+          document.getElementById('status').innerText = 'Sign-up successful! Verification email sent. Please verify your email before logging in.';
+          if (twoStepVerification) {
+            // Add your two-step verification setup here
+          }
+        })
+        .catch((error) => {
+          document.getElementById('status').innerText = `Error: ${error.message}`;
+        });
+    });
+
+    // Login Form Submission
+    document.getElementById('login-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          if (userCredential.user.emailVerified) {
+            document.getElementById('status').innerText = 'Login successful!';
+            setTimeout(() => window.location.href = 'profile.html', 2000);
+          } else {
+            document.getElementById('status').innerText = 'Please verify your email before logging in. Check inbox and head back here to login.';
+          }
+        })
+        .catch((error) => {
+          document.getElementById('status').innerText = `Error: ${error.message}`;
+        });
+    });
+
+    // Forgot Password
+    document.getElementById('forgot-password').addEventListener('click', function () {
+      const email = prompt('Please enter your email address:');
+      if (email) {
+        sendPasswordResetEmail(auth, email)
+          .then(() => {
+            document.getElementById('status').innerText = '9jahotblog Password reset email sent!';
+          })
+          .catch((error) => {
+            document.getElementById('status').innerText = `Error: ${error.message}`;
+          });
+      }
+    });
+  </script>
+</body>
+</html>
