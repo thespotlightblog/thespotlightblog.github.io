@@ -417,27 +417,6 @@
 <!-- Footer -->
 					<section id="footer">
 						<div class="inner">
-							<h2 class="major">Get in touch</h2>
-							<p>We'll love to hear from you.</p>
-							<form method="post" action="https://formspree.io/f/myzgeagq" class="cta">
-								<div class="fields">
-									<div class="field">
-										<label for="name">Name</label>
-										<input type="text" name="name" id="name" />
-									</div>
-									<div class="field">
-										<label for="email">Email</label>
-										<input type="email" name="email" id="email" />
-									</div>
-									<div class="field">
-										<label for="message">Message</label>
-										<textarea name="message" id="message" rows="4"></textarea>
-									</div>
-								</div>
-								<ul class="actions">
-									<li><input type="submit" value="Send Message" /></li>
-								</ul>
-							</form>
 							<ul class="contact">
 								<li class="icon solid fa-home">
 									Lagos, Nigeria<br />
@@ -627,57 +606,60 @@ document.getElementById("congratulatory-message").innerText = message;
         });
     });
 
-	// Dark mode toggle with multiple colors
-    let themeIndex = 0;
-    const themes = ["#333", "#006400", "#FFD700", "#8B0000", "#0000CD", "#800080", "#FF69B4", "#FFA500"];
-    function applyTheme(themeIndex) {
-        document.body.style.backgroundColor = themes[themeIndex];
-        document.body.style.color = themeIndex === 0 ? "#fff" : "#000";
-        document.querySelectorAll('.profile-container, .writing-container, .book-reader-container, .library-container, .cover-maker-container,').forEach((element) => {
-            element.style.backgroundColor = themes[themeIndex];
-        });
-    }
+	// Dark mode toggle
+				
+	let themeIndex = 0;
+const themes = ["#333", "#006400", "#FFD700", "#8B0000", "#0000CD", "#800080", "#FF69B4", "#FFA500"];
 
-    document.getElementById("dark-mode-toggle").addEventListener("click", () => {
+function applyTheme(themeIndex) {
+    document.body.style.backgroundColor = themes[themeIndex];
+    document.body.style.color = themeIndex === 0 ? "#fff" : "#000";
+    document.querySelectorAll('.profile-container, .writing-container, .book-reader-container, .library-container, .cover-maker-container').forEach((element) => {
+        element.style.backgroundColor = themes[themeIndex];
+    });
+}
+
+document.getElementById("dark-mode-toggle").addEventListener("click", () => {
+    themeIndex = (themeIndex + 1) % themes.length;
+    applyTheme(themeIndex);
+});
+
+document.querySelectorAll('.theme-toggle').forEach((button) => {
+    button.addEventListener("click", (event) => {
         themeIndex = (themeIndex + 1) % themes.length;
         applyTheme(themeIndex);
     });
+});
 
-    document.querySelectorAll('.theme-toggle').forEach((button) => {
-        button.addEventListener("click", (event) => {
-            themeIndex = (themeIndex + 1) % themes.length;
-            event.currentTarget.closest('.profile-container, .comic-maker-container, .writing-container, .book-reader-container, .library-container, .cover-maker-container').style.backgroundColor = themes[themeIndex];
+
+// Correctly set up the onAuthStateChanged observer
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        const userId = user.uid;
+        document.getElementById("user-name").innerText = user.displayName;
+        document.getElementById("user-email").innerText = user.email;
+        document.getElementById("user-username").innerText = user.displayName;
+        document.getElementById("profile-photo").src = user.photoURL;
+
+        // Fetch user data from Firestore
+        const userRef = doc(db, "users", userId);
+        getDoc(userRef).then((doc) => {
+            if (doc.exists()) {
+                const userData = doc.data();
+                document.getElementById("user-username").innerText = userData.username;
+                document.getElementById("user-email").innerText = userData.email;
+                document.getElementById("user-level").innerText = "9jahotblogger";
+            } else {
+                console.log("No such document!");
+            }
+        }).catch((error) => {
+            console.log("Error getting document:", error);
         });
-    });
+    } else {
+        window.location.href = "login-page.html";
+    }
+});
 
-	
-    // Authentication state observer
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            const userId = user.uid;
-            document.getElementById("user-name").innerText = user.displayName;
-            document.getElementById("user-email").innerText = user.email;
-            document.getElementById("user-username").innerText = user.displayName;
-            document.getElementById("profile-photo").src = user.photoURL;
-
-            // Fetch user data from Firestore
-            const userRef = doc(db, "users", userId);
-            getDoc(userRef).then((doc) => {
-                if (doc.exists()) {
-                    const userData = doc.data();
-                    document.getElementById("user-username").innerText = userData.username;
-                    document.getElementById("user-email").innerText = userData.email;
-                    document.getElementById("user-level").innerText = "9jahotblogger";
-                } else {
-                    console.log("No such document!");
-                }
-            }).catch((error) => {
-                console.log("Error getting document:", error);
-            });
-        } else {
-            window.location.href = "login-page.html";
-        }
-    });
 
     document.getElementById("logout").addEventListener("click", () => {
         signOut(auth).then(() => {
