@@ -534,21 +534,39 @@
     });
 
     // Dark mode toggle
-    let themeIndex = 0;
-    const themes = ["#333", "#006400", "#FFD700", "#8B0000", "#0000CD", "#800080", "#FF69B4", "#FFA500"];
+let themeIndex = 0;
+const themes = ["#333", "#006400", "#FFD700", "#8B0000", "#0000CD", "#800080", "#FF69B4", "#FFA500"];
 
-    function applyTheme(themeIndex) {
-        document.body.style.backgroundColor = themes[themeIndex];
-        document.body.style.color = themeIndex === 0 ? "#fff" : "#000";
-        document.querySelectorAll('.profile-container, .writing-container, .book-reader-container, .library-container, .cover-maker-container').forEach((element) => {
-            element.style.backgroundColor = themes[themeIndex];
-        });
-    }
+function applyTheme(themeIndex) {
+    const backgroundColor = themes[themeIndex];
+    const textColor = themeIndex === 0 ? "#fff" : "#000";
 
-    document.getElementById("dark-mode-toggle").addEventListener("click", () => {
+    document.body.style.backgroundColor = backgroundColor;
+    document.body.style.color = textColor;
+
+    // Update all containers to reflect the new theme
+    document.querySelectorAll('.profile-container, .writing-container, .book-reader-container, .library-container, .cover-maker-container').forEach((element) => {
+        element.style.backgroundColor = backgroundColor;
+        element.style.color = textColor; // Ensure text is visible on dark backgrounds
+    });
+}
+
+// Apply the initial theme when the page loads
+applyTheme(themeIndex);
+
+// Dark mode toggle button
+document.getElementById("dark-mode-toggle").addEventListener("click", () => {
+    themeIndex = (themeIndex + 1) % themes.length;
+    applyTheme(themeIndex);
+});
+
+// Theme toggle buttons for multiple elements
+document.querySelectorAll('.theme-toggle').forEach((button) => {
+    button.addEventListener("click", () => {
         themeIndex = (themeIndex + 1) % themes.length;
         applyTheme(themeIndex);
     });
+});
 
     // Story Submission
     document.getElementById('publish-story').addEventListener('click', async (e) => {
